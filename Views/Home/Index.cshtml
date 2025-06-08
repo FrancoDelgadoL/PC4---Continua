@@ -1,0 +1,27 @@
+﻿@model SentimentAnalysisApp.Models.SentimentViewModel
+
+<h1>Análisis de Sentimiento</h1>
+
+<form asp-action="Index" method="post">
+    <label for="opinion">Escribe tu opinión:</label><br />
+    <textarea name="newOpinion" id="opinion" rows="4" cols="50"></textarea><br />
+    <button type="submit">Analizar</button>
+</form>
+
+@if (Model.Results != null && Model.Results.Any())
+{
+    <hr />
+    <h2>Historial de Opiniones</h2>
+
+    @foreach (var item in Model.Results)
+    {
+        <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 10px; border-radius: 10px; background-color: #f9f9f9;">
+            <p><strong>Opinión:</strong> @item.Opinion</p>
+            <p><strong>Resultado:</strong> 
+                <span style="color:@(item.Prediction == "Positiva" ? "green" : "red")">@item.Prediction</span>
+            </p>
+            <p><strong>Confianza:</strong> @item.Probability.ToString("P2")</p>
+        </div>
+    }
+}
+
