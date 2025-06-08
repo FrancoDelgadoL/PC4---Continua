@@ -1,27 +1,67 @@
 ﻿@model SentimentAnalysisApp.Models.SentimentViewModel
 
-<h1>Análisis de Sentimiento</h1>
+<div class="container mt-5">
+    <h1 class="mb-4">Análisis de Sentimiento</h1>
 
-<form asp-action="Index" method="post">
-    <label for="opinion">Escribe tu opinión:</label><br />
-    <textarea name="newOpinion" id="opinion" rows="4" cols="50"></textarea><br />
-    <button type="submit">Analizar</button>
-</form>
-
-@if (Model.Results != null && Model.Results.Any())
-{
-    <hr />
-    <h2>Historial de Opiniones</h2>
-
-    @foreach (var item in Model.Results)
-    {
-        <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 10px; border-radius: 10px; background-color: #f9f9f9;">
-            <p><strong>Opinión:</strong> @item.Opinion</p>
-            <p><strong>Resultado:</strong> 
-                <span style="color:@(item.Prediction == "Positiva" ? "green" : "red")">@item.Prediction</span>
-            </p>
-            <p><strong>Confianza:</strong> @item.Probability.ToString("P2")</p>
+    <form asp-action="Index" method="post" class="mb-5">
+        <div class="mb-3">
+            <label for="opinion" class="form-label">Escribe tu opinión:</label>
+            <textarea class="form-control" name="newOpinion" id="opinion" rows="4" required></textarea>
         </div>
+        <button type="submit" class="btn btn-primary">Analizar</button>
+    </form>
+
+    @if (Model.Results != null && Model.Results.Any())
+    {
+    var total = Model.Results.Count;
+    var positivas = Model.Results.Count(r => r.Prediction == "Positiva");
+    var negativas = total - positivas;
+
+    <div class="alert alert-info">
+        <i class="bi bi-bar-chart-fill me-2"></i>
+        Has ingresado <strong>@total</strong> opiniones:
+        <span class="text-success">@positivas positivas</span> y
+        <span class="text-danger">@negativas negativas</span>.
+    </div>
     }
-}
+    <h2 class="mb-3">Historial de Opiniones</h2>
+
+    @if (Model.Results != null && Model.Results.Any())
+{
+    <form asp-action="ClearHistorial" method="post" class="mb-3">
+        <button type="submit" class="btn btn-danger">
+            <i class="bi bi-trash3-fill me-1"></i> Limpiar historial
+        </button>
+    </form>
+
+    <div class="alert alert-info">
+        <i class="bi bi-bar-chart-fill me-2"></i>
+        Has ingresado <strong>@Model.Results.Count</strong> opiniones...
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        @foreach (var item in Model.Results)
+        {
+            var isPositive = item.Prediction == "Positiva";
+            var icon = isPositive ? "bi-emoji-smile-fill" : "bi-emoji-frown-fill";
+            var badgeClass = isPositive ? "bg-success" : "bg-danger";
+
+            <div class="col">
+                <div class="card position-relative shadow-sm">
+                    <div class="card-body">
+                        <!-- Etiqueta con ícono -->
+                        <span class="position-absolute top-0 end-0 m-3 badge rounded-pill @badgeClass">
+                            <i class="bi @icon"></i> @item.Prediction
+                        </span>
+
+                        <p class="card-text mt-2"><strong>Opinión:</strong> @item.Opinion</p>
+                        <p class="card-text"><strong>Confianza:</strong> @item.Probability.ToString("P2")</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    }
+
+
 
