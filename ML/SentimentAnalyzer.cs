@@ -22,7 +22,8 @@ namespace SentimentAnalysisApp.ML
                 new SentimentData { Text = "No me gustó para nada", Label = false },
                 new SentimentData { Text = "Pésimo, no me gusto para nada", Label = false },
                 new SentimentData { Text = "Bien, lindo producto", Label = true },
-                new SentimentData { Text = "Mal, feo producto", Label = false }
+                new SentimentData { Text = "Mal, feo producto", Label = false },
+                new SentimentData { Text = "Espantoso, no deberian hacer más productos", Label = false }
             };
 
             var dataView = _mlContext.Data.LoadFromEnumerable(trainingData);
