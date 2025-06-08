@@ -49,6 +49,19 @@ namespace SentimentAnalysisApp.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public IActionResult ClearHistorial()
+        {
+            HttpContext.Session.Remove("Historial");
+
+            var model = new SentimentViewModel
+            {
+                Results = new List<SentimentResult>() // Devuelve una lista vacía explícitamente
+            };
+
+            return View("Index", model); // No uses RedirectToAction aquí, porque no pasas modelo
+        }
     }
 }
 

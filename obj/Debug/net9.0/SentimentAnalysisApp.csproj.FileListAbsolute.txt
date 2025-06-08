@@ -121,3 +121,4 @@ C:\Users\franc\SentimentAnalysisApp\obj\Debug\net9.0\refint\SentimentAnalysisApp
 C:\Users\franc\SentimentAnalysisApp\obj\Debug\net9.0\SentimentAnalysisApp.pdb
 C:\Users\franc\SentimentAnalysisApp\obj\Debug\net9.0\SentimentAnalysisApp.genruntimeconfig.cache
 C:\Users\franc\SentimentAnalysisApp\obj\Debug\net9.0\ref\SentimentAnalysisApp.dll
+C:\Users\franc\SentimentAnalysisApp\obj\Debug\net9.0\SentimentAnalysisApp.sourcelink.json
